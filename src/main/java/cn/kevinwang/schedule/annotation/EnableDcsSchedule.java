@@ -1,6 +1,10 @@
 package cn.kevinwang.schedule.annotation;
 
+import cn.kevinwang.schedule.aop.CaculateTaskTimeAop;
 import cn.kevinwang.schedule.config.DcsSchedulingConfiguration;
+import cn.kevinwang.schedule.task.CronTaskRegister;
+import cn.kevinwang.schedule.task.ScheduledTask;
+import cn.kevinwang.schedule.task.SchedulingConfig;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
@@ -17,7 +21,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import({DcsSchedulingConfiguration.class})
-@ImportAutoConfiguration
-@ComponentScan("cn.kevinwang.*")
+@ImportAutoConfiguration({SchedulingConfig.class, CaculateTaskTimeAop.class, CronTaskRegister.class})
+@ComponentScan("cn.kevinwang.schedule.*")
 public @interface EnableDcsSchedule {
 }

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.ReflectionUtils;
@@ -37,6 +38,7 @@ import static cn.kevinwang.schedule.common.Constance.Global.*;
  * @author wang
  * @create 2024-01-16-17:15
  */
+@Configuration
 public class DcsSchedulingConfiguration implements ApplicationContextAware, BeanPostProcessor, ApplicationListener<ContextRefreshedEvent> {
     private final Logger logger = LoggerFactory.getLogger(DcsSchedulingConfiguration.class);
     private final Set<Class<?>> nonAnnotatedClasses = Collections.newSetFromMap(new ConcurrentHashMap<>(64));
@@ -97,7 +99,7 @@ public class DcsSchedulingConfiguration implements ApplicationContextAware, Bean
 
     private void initConfig(ApplicationContext context){
         try {
-            StarterServerProperties properties = context.getBean(Constance.BeanName.StarterServerPropertiesBeanName, StarterServerAutoConfig.class).getProperties();
+            StarterServerProperties properties = context.getBean(Constance.BeanName.StarterServerAutoConfigBeanName, StarterServerAutoConfig.class).getProperties();
             Constance.Global.zkAddress = properties.getZkAddress();
             Constance.Global.scheduleServerId = properties.getScheduleServerId();
             Constance.Global.scheduleServerName = properties.getScheduleServerName();
